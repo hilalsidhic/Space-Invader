@@ -4,6 +4,7 @@ import math
 import time
 from pygame import mixer
 import threading
+import moviepy.editor
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -570,30 +571,34 @@ def next_level_loading():
 	#play music
 	mixer.music.load("sounds/nextlevel.mp3")
 	mixer.music.play(-1)
-	while next_level_loading:
-		for event in pygame.event.get():
-			print(event)
-			if event.type == pygame.QUIT:
-				pygame.quit()
-				quit()
-		green = (0,255,0)
-		bright_green = (0,200,0)
-		red = (255,0,0)
-		bright_red = (200,0,0)
-		black = (0,0,0)
-		cloud_color = (255, 255, 255, 0)
-		# screen = pygame.Surface((WIDTH, HEIGHT))
-		# screen = screen.convert_alpha()
-		# screen.fill((0, 0, 0, 0))
-		screen.fill(cloud_color)
-		# TextSurf, TextRect = text_objects("Next Level Loading", largeText)
-		pygame.time.wait(1000)
-		nextlevel = font.render("Next Level Loading", True, black)
-		screen.blit(nextlevel, (WIDTH/2-150, HEIGHT/2))
-		pygame.display.update()
-		pygame.time.wait(5000)
-		next_level_loading = False
-		clock.tick(60)
+	video = moviepy.editor.VideoFileClip("nextlevelloading.mp4")
+	video.preview()
+	pygame.time.wait(200)
+	next_level_loading = False
+	# while next_level_loading:
+	# 	for event in pygame.event.get():
+	# 		print(event)
+	# 		if event.type == pygame.QUIT:
+	# 			pygame.quit()
+	# 			quit()
+	# 	green = (0,255,0)
+	# 	bright_green = (0,200,0)
+	# 	red = (255,0,0)
+	# 	bright_red = (200,0,0)
+	# 	black = (0,0,0)
+	# 	cloud_color = (255, 255, 255, 0)
+	# 	# screen = pygame.Surface((WIDTH, HEIGHT))
+	# 	# screen = screen.convert_alpha()
+	# 	# screen.fill((0, 0, 0, 0))
+	# 	screen.fill(cloud_color)
+	# 	# TextSurf, TextRect = text_objects("Next Level Loading", largeText)
+	# 	pygame.time.wait(1000)
+	# 	nextlevel = font.render("Next Level Loading", True, black)
+	# 	screen.blit(nextlevel, (WIDTH/2-150, HEIGHT/2))
+	# 	pygame.display.update()
+	# 	pygame.time.wait(5000)
+	# 	next_level_loading = False
+	# 	clock.tick(60)
 
 def story_mode_loop():
 	global playerX,paused,playerY,count,playerX_change,enemySpeed,playerY_change,bulletX,bulletY,bulletX_change,bulletY_change,bullet_state,score_value,enemyX,enemyY,enemyX_change,enemyY_change
@@ -608,9 +613,7 @@ def story_mode_loop():
 				keys = pygame.key.get_pressed()
 		
 			if event.type == pygame.QUIT:
-				running = False
-				mixer.music.load("sounds/titlenew.mp3")
-				mixer.music.play(-1)
+				pause()
 
 			if keys[pygame.K_ESCAPE]:
 				# running = False
